@@ -4,7 +4,10 @@ import dynamic from 'next/dynamic';
 import 'codemirror/lib/codemirror.css'; // Import the Codemirror styles
 import 'codemirror/mode/python/python'; // Import the Python mode for Codemirror
 
-const CodeMirror = dynamic(() => import('react-codemirror2'), { ssr: false });
+// Import the whole react-codemirror2 library
+import 'react-codemirror2/lib/codemirror.css';
+import { Controlled as CodeMirror } from 'react-codemirror2';
+
 const Console = dynamic(() => import('../components/Console'), { ssr: false });
 
 const Home = () => {
@@ -12,11 +15,8 @@ const Home = () => {
   const [output, setOutput] = useState('');
 
   const runCode = async () => {
-    // Use Pyodide to execute the Python code
     const pyodide = await window.languagePluginLoader;
     const result = pyodide.runPython(code);
-
-    // Set the result to the output state
     setOutput(result);
   };
 
