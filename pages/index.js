@@ -14,9 +14,10 @@ const Home = () => {
   const runCode = async () => {
     // Use Pyodide to execute the Python code
     const pyodide = await window.languagePluginLoader;
-    pyodide.runPythonAsync(code).then((result) => {
-      setOutput(result);
-    });
+    const result = pyodide.runPython(code);
+
+    // Set the result to the output state
+    setOutput(result);
   };
 
   return (
@@ -33,7 +34,10 @@ const Home = () => {
         }}
       />
       <button onClick={runCode}>Run</button>
-      <Console output={output} />
+      <div>
+        <h2>Output:</h2>
+        <Console output={output} />
+      </div>
     </div>
   );
 };
